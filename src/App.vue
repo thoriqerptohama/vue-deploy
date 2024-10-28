@@ -1,85 +1,71 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
+  <div id="app">
+    <h1>Welcome to My Vue.js Blog</h1>
+    <div class="blog-list">
+      <BlogPost
+        v-for="post in blogPosts"
+        :key="post.id"
+        :title="post.title"
+        :content="post.content"
+        :likes="post.likes"
+        @likePost="handleLikePost(post.id)"
+      />
     </div>
-  </header>
-
-  <RouterView />
+  </div>
 </template>
 
+<script>
+import BlogPost from './components/BlogPost.vue'
+
+export default {
+  props: {},
+  name: 'App',
+  components: {
+    BlogPost
+  },
+  data() {
+    return {
+      blogPosts: [
+        { id: 1, title: 'Vue.js Basics', content: 'Learning the fundamentals of Vue.js', likes: 0 },
+        {
+          id: 2,
+          title: 'Understanding Components',
+          content: 'How to build components in Vue.js',
+          likes: 0
+        },
+        {
+          id: 3,
+          title: 'Vue.js Lifecycle',
+          content: 'An overview of Vue.js lifecycle methods',
+          likes: 0
+        }
+      ]
+    }
+  },
+  methods: {
+    handleLikePost(postId) {
+      const post = this.blogPosts.find((p) => p.id === postId)
+      if (post) {
+        post.likes += 1
+      }
+    }
+  }
+}
+</script>
+
 <style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-nav {
-  width: 100%;
-  font-size: 12px;
+#app {
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
   text-align: center;
-  margin-top: 2rem;
+  margin: 40px auto;
+  max-width: 600px;
 }
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
-  }
+.blog-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 </style>
+
+
