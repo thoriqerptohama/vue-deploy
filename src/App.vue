@@ -1,27 +1,12 @@
-<template>
-  <div id="app">
-    <h1>Welcome to My Vue.js Blog</h1>
-    <div class="blog-list">
-      <BlogPost
-        v-for="post in blogPosts"
-        :key="post.id"
-        :title="post.title"
-        :content="post.content"
-        :likes="post.likes"
-        @likePost="handleLikePost(post.id)"
-      />
-    </div>
-  </div>
-</template>
-
 <script>
-import BlogPost from './components/BlogPost.vue'
+import BlogPost from './components/BlogPost.vue';
+import HelloWorld from './components/HelloWorld.vue'; 
 
 export default {
-  props: {},
   name: 'App',
   components: {
-    BlogPost
+    BlogPost,
+    HelloWorld
   },
   data() {
     return {
@@ -40,17 +25,17 @@ export default {
           likes: 0
         }
       ]
-    }
+    };
   },
   methods: {
     handleLikePost(postId) {
-      const post = this.blogPosts.find((p) => p.id === postId)
+      const post = this.blogPosts.find((p) => p.id === postId);
       if (post) {
-        post.likes += 1
+        post.likes += 1;
       }
     }
   }
-}
+};
 </script>
 
 <style scoped>
@@ -68,4 +53,19 @@ export default {
 }
 </style>
 
-
+<template>
+  <div id="app">
+    <h1>Welcome to My Vue.js Blog</h1>
+    <HelloWorld msg="Hello, Vue.js Enthusiasts!"></HelloWorld>
+    <div class="blog-list">
+      <BlogPost
+        v-for="post in blogPosts"
+        :key="post.id"
+        :title="post.title"
+        :content="post.content"
+        :likes="post.likes"
+        @likePost="handleLikePost(post.id)"
+      />
+    </div>
+  </div>
+</template>
